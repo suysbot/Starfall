@@ -1,0 +1,17 @@
+name: Build Starfall
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: microsoft/setup-msbuild@v2
+      - name: Build DLL
+        run: msbuild Starfall.sln /p:Configuration=Release /p:Platform=x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Starfall-3551
+          path: x64/Release/Starfall.dll
